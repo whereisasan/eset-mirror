@@ -10,4 +10,4 @@ run:
 	docker compose up -d
 	
 update:
-	docker exec eset-mirror php update.
+	docker exec eset-mirror php update.php
