@@ -1,0 +1,62 @@
+---
+version: '3.8'
+
+volumes:
+    eset-mirror-bases: {}
+    eset-mirror-log: {}
+    eset-mirror-nginxAuthData: {}
+
+services:
+    eset-mirror:
+        container_name: eset-mirror
+        build:
+            context: .
+        image: whereisasan/eset-mirror:latest
+        environment:
+            #Язык программы. Может быть en, ru, ukr
+            - scriptLanguage=${scriptLanguage:-ru}
+            #[LOG]
+            #Тип логгирования.
+            #Может принимать следующие параметры:
+            #"0" - Отключение логгирования;
+            #"1" - Логгирование в файл;
+            #"2" - Логгирование в stdout;
+            #"3" - Логгирование в файл и stdout.
+            - emLogType=${emLogType:-3}
+            #Уровень логгирования.
+            #Может принимать следующие параметры:
+            #"0" - Системные сообщения и сообщения об успешном обновлении;
+            #"1" - Системные сообщения, ошибки и сообщения об успешном обновлении;
+            #"2" - Системные сообщения, ошибки, замечания и сообщения об успешном обновлении
+            #"3" - Системные сообщения, ошибки, замечания и сообщения о процессе обновления
+            #"4" - Системные сообщения, ошибки, замечания, сообщения о процессе обновления и поиска ключей
+            #"5" - Все вышеперечисленное плюс сообщения отладки.
+            - emLogLevel=${emLogLevel:-5}
+            #Создание зеркал обновлений для версий, 0 выкл. 1 вкл.
+            - esetVersion3=${esetVersion3:-1}
+            - esetVersion5=${esetVersion5:-1}
+            - esetVersion9=${esetVersion9:-1}
+            - esetVersion10=${esetVersion10:-1}
+            - esetVersion12=${esetVersion12:-1}
+            - esetVersion13=${esetVersion13:-1}
+            - esetVersion14=${esetVersion14:-1}
+            - esetVersion15=${esetVersion15:-1}
+            - esetVersion16=${esetVersion16:-1}
+            - esetVersioEP6=${esetVersioEP6:-1}
+            - esetVersionEP7=${esetVersioEP7:-1}
+            - esetVersionEP8=${esetVersioEP8:-1}
+            - esetVersionEP9=${esetVersioEP9:-1}
+            - esetVersionEP10=${esetVersioEP10:-1}
+            #Разрядность антивируса, 0 выкл. 1 вкл.
+            - esetX86=${esetX86:-1}
+            - esetX64=${esetX64:-1}
+            #Часовой пояс в формате date_default_timezone_set
+            - scriptTimezone=${scriptTimezone:-Asia/Tashkent}
+            #Показывать использованный логин и пароль в созданном HTML. 0 выкл. 1 вкл.
+            - scriptShowLoginLassword=${scriptShowLoginLassword:-0}
+        volumes:
+            - eset-mirror-bases:/eset-mirror/www/
+            - eset-mirror-log:/eset-mirror/log/
+            - eset-mirror-nginxAuthData:/eset-mirror/nginxAuthData/
+        ports:
+            - 8088:80/tcp
