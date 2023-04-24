@@ -9,8 +9,6 @@ volumes:
 services:
     eset-mirror:
         container_name: eset-mirror
-        build:
-            context: .
         image: whereisasan/eset-mirror:latest
         environment:
             #Язык программы. Может быть en, ru, ukr
