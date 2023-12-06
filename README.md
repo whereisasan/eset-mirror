@@ -59,7 +59,7 @@ services:
             - esetVersionEP8=${esetVersioEP8:-1}
             - esetVersionEP9=${esetVersioEP9:-1}
             - esetVersionEP10=${esetVersioEP10:-1}
-            - esetVersionEP10=${esetVersioEP11:-1}
+            - esetVersionEP11=${esetVersioEP11:-1}
             #Разрядность антивируса, 0 выкл. 1 вкл.
             - esetX86=${esetX86:-1}
             - esetX64=${esetX64:-1}
@@ -80,7 +80,7 @@ services:
 Клонируйте этот репозиторий и создайте образ
 
 ```bash
-docker build -t eset-mirror:latest . --platform=linux/amd64
+docker build -t whereisasan/eset-mirror:latest . --platform=linux/amd64
 ```
 
 ## Запустить контейнер

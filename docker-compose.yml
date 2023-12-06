@@ -9,7 +9,7 @@ volumes:
 services:
     eset-mirror:
         container_name: eset-mirror
-        image: eset-mirror
+        image: whereisasan/eset-mirror:latest
         environment:
             #Язык программы. Может быть en, ru, ukr
             - scriptLanguage=${scriptLanguage:-ru}
@@ -58,4 +58,4 @@ services:
             - eset-mirror-log:/eset-mirror/log/
             - eset-mirror-nginxAuthData:/eset-mirror/nginxAuthData/
         ports:
-            - 8088:80/tcp
+            - 80:80/tcp
