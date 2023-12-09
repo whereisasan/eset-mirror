@@ -52,7 +52,7 @@ services:
             #Часовой пояс в формате date_default_timezone_set
             - scriptTimezone=${scriptTimezone:-Asia/Tashkent}
             #Показывать использованный логин и пароль в созданном HTML. 0 выкл. 1 вкл.
-            - scriptShowLoginLassword=${scriptShowLoginLassword:-0}
+            - scriptShowLoginLassword=${scriptShowLoginLassword:-1}
         volumes:
             - eset-mirror-bases:/eset-mirror/www/
             - eset-mirror-log:/eset-mirror/log/

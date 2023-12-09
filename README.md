@@ -1,6 +1,6 @@
 # Eset Nod32 Update mirror
 
-ESET Nod32 Updates Mirror основе на образе Nginx:stable-alpine и PHP-скрипте <https://github.com/Kingston-kms/eset_mirror_script>
+ESET Nod32 Updates Mirror основан на образе Nginx:stable-alpine и PHP Скрипте <https://github.com/Kingston-kms/eset_mirror_script>
 
 ## Требования
 
@@ -21,8 +21,6 @@ volumes:
 services:
     eset-mirror:
         container_name: eset-mirror
-        build:
-            context: .
         image: whereisasan/eset-mirror:latest
         environment:
             #Язык программы. Может быть en, ru, ukr
@@ -45,18 +43,18 @@ services:
             #"5" - Все вышеперечисленное плюс сообщения отладки.
             - emLogLevel=${emLogLevel:-5}
             #Создание зеркал обновлений для версий, 0 выкл. 1 вкл.
-            - esetVersion3=${esetVersion3:-1}
-            - esetVersion5=${esetVersion5:-1}
-            - esetVersion9=${esetVersion9:-1}
-            - esetVersion10=${esetVersion10:-1}
-            - esetVersion12=${esetVersion12:-1}
-            - esetVersion13=${esetVersion13:-1}
-            - esetVersion14=${esetVersion14:-1}
-            - esetVersion15=${esetVersion15:-1}
-            - esetVersion16=${esetVersion16:-1}
-            - esetVersioEP6=${esetVersioEP6:-1}
-            - esetVersionEP7=${esetVersioEP7:-1}
-            - esetVersionEP8=${esetVersioEP8:-1}
+            - esetVersion3=${esetVersion3:-0}
+            - esetVersion5=${esetVersion5:-0}
+            - esetVersion9=${esetVersion9:-0}
+            - esetVersion10=${esetVersion10:-0}
+            - esetVersion12=${esetVersion12:-0}
+            - esetVersion13=${esetVersion13:-0}
+            - esetVersion14=${esetVersion14:-0}
+            - esetVersion15=${esetVersion15:-0}
+            - esetVersion16=${esetVersion16:-0}
+            - esetVersioEP6=${esetVersioEP6:-0}
+            - esetVersionEP7=${esetVersioEP7:-0}
+            - esetVersionEP8=${esetVersioEP8:-0}
             - esetVersionEP9=${esetVersioEP9:-1}
             - esetVersionEP10=${esetVersioEP10:-1}
             - esetVersionEP11=${esetVersioEP11:-1}
@@ -66,13 +64,13 @@ services:
             #Часовой пояс в формате date_default_timezone_set
             - scriptTimezone=${scriptTimezone:-Asia/Tashkent}
             #Показывать использованный логин и пароль в созданном HTML. 0 выкл. 1 вкл.
-            - scriptShowLoginLassword=${scriptShowLoginLassword:-0}
+            - scriptShowLoginLassword=${scriptShowLoginLassword:-1}
         volumes:
             - eset-mirror-bases:/eset-mirror/www/
             - eset-mirror-log:/eset-mirror/log/
             - eset-mirror-nginxAuthData:/eset-mirror/nginxAuthData/
         ports:
-            - 8088:80/tcp
+            - 80:80/tcp
 ```
 
 ## Создать образ контейнера
@@ -93,13 +91,17 @@ docker-compose up -d
 
 ## Конфигурация системы
 
-Настройте Cron на обновление каждые 120 минут
+Настройте Cron на автоматические обновления
 
 ```text
-*/120 * * * * docker exec eset-mirror php update.php
+crontab -e
 ```
 
-## Обновление антивирусных баз
+```text
+*/1440 * * * * docker exec eset-mirror php update.php
+```
+
+## Обновление антивирусных баз вручную
 
 ```text
 docker-compose exec eset-mirror php update.php
